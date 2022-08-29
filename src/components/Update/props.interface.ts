@@ -1,4 +1,4 @@
-import { IFormElements } from 'src/interfaces/formElements.interface'
+import { IFormElements } from 'src/interfaces/interfaces'
 
 export interface IProps {
   type: string

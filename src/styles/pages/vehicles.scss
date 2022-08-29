@@ -2,6 +2,7 @@
   padding: 8px;
   height: 100%;
   overflow-y: auto;
+
   .containerData {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -12,5 +13,13 @@
         justify-content: space-around;
       }
     }
+  }
+  .ant-empty {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0;
+    align-items: center;
+    justify-content: center;
   }
 }
