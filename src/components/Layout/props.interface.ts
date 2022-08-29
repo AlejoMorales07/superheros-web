@@ -7,4 +7,5 @@ export type Items = {
 export interface IProps {
   children: JSX.Element
   title: string
+  create: JSX.Element
 }

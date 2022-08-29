@@ -1,16 +1,50 @@
-import React from 'react'
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
+import { Button, Card } from 'antd'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
+import Create from 'src/components/Create'
+import Delete from 'src/components/Delete'
+import Form from 'src/components/Form'
 import Layout from 'src/components/Layout'
-import { IProps } from './props.interface'
+import Update from 'src/components/Update'
+import { IVehicles } from 'src/interfaces/vehicles.interface'
+import { formElements } from './components/formElements'
 
-export default function index(props: IProps) {
+export default function index() {
+  const [vehicles, setVehicles] = useState<IVehicles[]>([] as IVehicles[])
+  const router = useRouter()
+  console.log(router.pathname)
+  useEffect(() => {
+    getData()
+  }, [])
+
+  const getData = async () => {
+    const data = await (await fetch(`http://localhost:3000/api${router.pathname}`)).json()
+    setVehicles(data)
+  }
+
   return (
-    <Layout title="Vehículos">
-      <div>hola mundo</div>
+    <Layout title="Vehículos" create={<Create type={router.pathname} FormItems={<Form formElements={formElements} />} afterCreate={getData} />}>
+      <div className="container">
+        <div className="containerData">
+          {vehicles.map(vehicle => (
+            <Card>
+              <h1>{vehicle.name}</h1>
+              <p>{`Tipo: ${vehicle.type}`}</p>
+              <div className="buttons">
+                <Update
+                  type={router.pathname}
+                  element={vehicle}
+                  FormItems={<Form formElements={formElements} />}
+                  formElements={formElements}
+                  afterUpdate={getData}
+                />
+                <Delete type={router.pathname} element={vehicle} afterDelete={getData} />
+              </div>
+            </Card>
+          ))}
+        </div>
+      </div>
     </Layout>
   )
-}
-
-export const getServerSideProps = async () => {
-  const vehicles = await (await fetch('http://localhost:3000/api/vehicles')).json()
-  return { props: { vehicles } }
 }

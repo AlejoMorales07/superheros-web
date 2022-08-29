@@ -1,13 +1,19 @@
 .site-layout {
   .site-layout-background {
+    display: flex;
     background: #fff;
     margin: 16px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     h2 {
       font-weight: bold;
+      margin: 0;
     }
   }
   .content {
     margin: 16px;
     background: #fff;
+    height: 10px;
   }
 }
